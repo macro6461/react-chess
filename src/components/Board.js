@@ -4,6 +4,7 @@ import Container from "./Container";
 import Piece from "./Piece";
 import "../App.css";
 import pieces from "../pieces.js";
+import {checkPawn} from '../services.js'
 
 const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -13,6 +14,8 @@ class Board extends Component {
       gameStarted: false,
       view: true,
       movable: null,
+      oppoPiece: null,
+      taken: {white: [], black: []},
       turn: 0,
       pieces
   };
@@ -37,8 +40,18 @@ class Board extends Component {
     });
   };
 
+  setOppo = (oppoPiece) =>{
+    if (this.state.movable){
+      this.setState({
+        oppoPiece
+      },()=>{
+        this.setSpot(oppoPiece.pos)
+      })
+    }
+  };
+
   setMovable = x => {
-    var movable;
+    var movable
     if (this.state.movable) {
       movable = this.state.movable.id !== x.id ? x : null;
     } else {
@@ -49,20 +62,42 @@ class Board extends Component {
     });
   };
 
-  setSpot = spot => {
-    var pieces = this.state.pieces.map(x => {
-      if (x.id === this.state.movable.id) {
-        x.pos = spot;
-      }
-      return x;
-    });
+  setSpot = (pos2) => { 
+    var movable = this.state.movable
+    var taken= this.state.taken;
+    if (movable.name === 'Pawn' && checkPawn(movable, pos2, this.state.oppoPiece, this.state.view)){
+      var pieces = this.state.pieces.map(x => {
+        if (x.id === this.state.movable.id) {
+          x.pos = pos2;
+        }
+        return x;
+      }).filter((x)=>{
+        if (this.state.oppoPiece){
+          return  x.id !== this.state.oppoPiece.id
+        } else {
+          return x
+        }
+      });
 
-    this.setState({
-      pieces,
-      gameStarted: true,
-      turn: this.state.turn ? 0 : 1,
-      movable: null
-    });
+      if (this.state.oppoPiece){
+        taken[this.state.oppoPiece.color].push(this.state.oppoPiece)
+        this.setState({
+          taken
+        },()=>{
+          console.log(this.state.taken)
+        })
+      }
+  
+      this.setState({
+        pieces,
+        gameStarted: true,
+        turn: this.state.turn ? 0 : 1,
+        movable: null,
+        oppoPiece: null
+      });
+    } else {
+      this.setState({oppoPiece:null})
+    }
   };
 
   render() {
@@ -81,6 +116,7 @@ class Board extends Component {
                   movable={this.state.movable}
                   view={this.state.view}
                   letters={letters}
+                  setOppo={this.setOppo}
                   turn={this.state.turn}
                 />
               );

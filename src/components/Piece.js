@@ -18,7 +18,7 @@ const Piece = props => {
     <div
       className="piece"
       style={outerStyle}
-      onClick={teamId === turn ? () => props.setMovable(piece) : null}
+      onClick={teamId === turn ? () => props.setMovable(piece) : ()=>props.setOppo(piece)}
       key={id}
     >
       {code ? (
