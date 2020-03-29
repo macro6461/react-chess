@@ -4,26 +4,15 @@ import "../App.css";
 const Piece = props => {
   var { piece, letters, view, movable, turn } = props;
   var { teamId, pos, id, code, color } = piece;
-  var dir;
 
-  if (teamId === 0 && piece.name !== "Pawn") {
-    dir = 0;
-  } else if (teamId === 0 && piece.name === "Pawn") {
-    dir = 25;
-  } else if (teamId === 1 && piece.name === "Pawn") {
-    dir = 150;
-  } else {
-    dir = 175;
-  }
+  var dir = (pos.number - 1) * 25;
 
-  dir = (pos.number - 1) * 25;
-
-  const outerStyle = {
-    bottom: view ? null : dir,
-    top: !view ? null : dir,
+  var outerStyle={
     left: letters.indexOf(pos.letter) * 25,
-    border: movable && movable.id === id ? "solid 1px red" : ""
-  };
+    border: movable && movable.id === id ? "solid 1px red" : "",
+    top: dir,
+    transform: view ? null : 'rotate(180deg)'
+  }
 
   return (
     <div

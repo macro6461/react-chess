@@ -4,7 +4,6 @@ import Container from "./Container";
 import Piece from "./Piece";
 import "../App.css";
 import pieces from "../pieces.js";
-const piecesReset = pieces.slice();
 
 const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -15,16 +14,20 @@ class Board extends Component {
       view: true,
       movable: null,
       turn: 0,
-      pieces: pieces
+      pieces
   };
 
   reset = () => {
+    var pieces = this.state.pieces.map(x=>{
+      x.pos = x.init
+      return x
+    })
     this.setState({
       gameStarted: false,
       view: true,
       movable: null,
       turn: 0,
-      pieces: piecesReset
+      pieces,
     });
   };
 
@@ -55,10 +58,10 @@ class Board extends Component {
     });
 
     this.setState({
-      movable: null,
       pieces,
       gameStarted: true,
-      turn: this.state.turn ? 0 : 1
+      turn: this.state.turn ? 0 : 1,
+      movable: null
     });
   };
 
@@ -68,7 +71,7 @@ class Board extends Component {
         <div id="boardOuter">
           <Container data={letters} id={"numberContainer"} letters={letters} />
           <Container data={numbers} id={"letterContainer"} letters={letters} />
-          <div id="boardInner">
+          <div id="boardInner" style={{transform: this.state.view ? null : 'rotate(180deg)'}}>
             {this.state.pieces.map(x => {
               return (
                 <Piece
