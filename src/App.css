@@ -15,7 +15,7 @@ body {
 #boardOuter {
   height: 225px;
   width: 225px;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   margin: auto;
 }
@@ -73,4 +73,24 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50px;
+}
+
+.gutter {
+  position: relative;
+  width: 150px;
+  height: 100px;
+  display: block;
+  margin: auto;
+}
+
+.takenPiece{
+  display: inline-block;
+  margin: 10px;
+  position: relative !important;
+}
+
+.takenPiece p {
+    text-align: center;
+    width: 20px;
+    margin: 0px;
 }

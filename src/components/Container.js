@@ -4,8 +4,8 @@ import Square from "./Square.js";
 const Container = ({ data, id }) => {
   return (
     <div id={id}>
-      {data.map(x => {
-        return <Square isOnBoard={false} val={x} />;
+      {data.map((x, i) => {
+        return <Square key={i} isOnBoard={false} val={x} />;
       })}
     </div>
   );

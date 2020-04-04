@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Row from "./Row";
 import Container from "./Container";
 import Piece from "./Piece";
+import Gutter from "./Gutter";
 import "../App.css";
 import pieces from "../pieces.js";
 import {checkPawn} from '../services.js'
@@ -17,11 +18,12 @@ class Board extends Component {
       oppoPiece: null,
       taken: {white: [], black: []},
       turn: 0,
-      pieces
+      pieces,
+      piecesReset: pieces.slice()
   };
 
   reset = () => {
-    var pieces = this.state.pieces.map(x=>{
+    var pieces = this.state.piecesReset.map(x=>{
       x.pos = x.init
       return x
     })
@@ -29,6 +31,7 @@ class Board extends Component {
       gameStarted: false,
       view: true,
       movable: null,
+      taken: {white: [], black: []},
       turn: 0,
       pieces,
     });
@@ -83,8 +86,6 @@ class Board extends Component {
         taken[this.state.oppoPiece.color].push(this.state.oppoPiece)
         this.setState({
           taken
-        },()=>{
-          console.log(this.state.taken)
         })
       }
   
@@ -102,7 +103,13 @@ class Board extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{display: 'flex'}}>
+        <div
+          style={{ display: "block", margin: "auto", minWidth: 100}}
+          onClick={!this.state.gameStarted ? this.changeView : this.reset}
+        >
+          <p style={{cursor: 'pointer'}}>{this.state.gameStarted ? "Reset" : "Change Sides"}</p>
+        </div>
         <div id="boardOuter">
           <Container data={letters} id={"numberContainer"} letters={letters} />
           <Container data={numbers} id={"letterContainer"} letters={letters} />
@@ -124,6 +131,7 @@ class Board extends Component {
             {letters.map((x, i) => {
               return (
                 <Row
+                  key={x + numbers[i]}
                   letters={letters}
                   numbers={numbers}
                   index={i}
@@ -135,13 +143,7 @@ class Board extends Component {
             })}
           </div>
         </div>
-        <br />
-        <div
-          style={{ display: "block", margin: "auto", width: 100 }}
-          onClick={!this.state.gameStarted ? this.changeView : this.reset}
-        >
-          {this.state.gameStarted ? "Reset" : "Change Sides"}
-        </div>
+        <Gutter taken={this.state.taken} letters={letters} view={this.state.view}/>
       </div>
     );
   }

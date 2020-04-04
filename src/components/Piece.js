@@ -7,22 +7,28 @@ const Piece = props => {
 
   var dir = (pos.number - 1) * 25;
 
+  var onClick = !props.setOppo || !props.setMovable 
+        ? null 
+        : teamId === turn ? () => props.setMovable(piece) : ()=>props.setOppo(piece)
+
+
+
   var outerStyle={
-    left: letters.indexOf(pos.letter) * 25,
+    left: onClick ? letters.indexOf(pos.letter) * 25 : null,
     border: movable && movable.id === id ? "solid 1px red" : "",
-    top: dir,
+    top: onClick ? dir : null,
     transform: view ? null : 'rotate(180deg)'
   }
 
   return (
     <div
-      className="piece"
+      className={onClick ? "piece" : 'takenPiece'}
       style={outerStyle}
-      onClick={teamId === turn ? () => props.setMovable(piece) : ()=>props.setOppo(piece)}
+      onClick={onClick}
       key={id}
     >
       {code ? (
-        <p dangerouslySetInnerHTML={{ __html: `${code}` }} />
+        <p dangerouslySetInnerHTML={{ __html: `${code.trim()}` }} />
       ) : (
         <div
           style={{

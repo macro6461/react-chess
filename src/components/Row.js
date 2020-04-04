@@ -13,6 +13,7 @@ const Row = ({ isEven, letters, numbers, index, setSpot, movable }) => {
       {arr.map((x, i) => {
         return (
           <Square
+          key={i}
             setSpot={setSpot}
             movable={movable}
             isOnBoard={true}

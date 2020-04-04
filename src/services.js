@@ -1,4 +1,4 @@
-export const checkBlocked = (piece, pos2, oppoPiece,) =>{
+const checkBlocked = (piece, pos2, oppoPiece,) =>{
     
 }
 
@@ -13,7 +13,7 @@ export const checkPawn = (piece, pos2, oppoPiece, view) =>{
             spaces = pos2.number - piece.pos.number
         }
     } else {
-        if (piece.color === 'white'){
+        if (piece.color === 'black'){
             spaces = pos2.number - piece.pos.number
         } else {
             spaces = piece.pos.number - pos2.number
