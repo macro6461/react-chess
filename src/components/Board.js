@@ -3,6 +3,7 @@ import Row from "./Row";
 import Container from "./Container";
 import Piece from "./Piece";
 import Gutter from "./Gutter";
+import ImageCropper from './ImageCropper';
 import "../App.css";
 import pieces from "../pieces.js";
 import {checkPawn} from '../services.js'
@@ -103,13 +104,14 @@ class Board extends Component {
 
   render() {
     return (
-      <div style={{display: 'flex'}}>
-        <div
-          style={{ display: "block", margin: "auto", minWidth: 100}}
-          onClick={!this.state.gameStarted ? this.changeView : this.reset}
-        >
-          <p style={{cursor: 'pointer'}}>{this.state.gameStarted ? "Reset" : "Change Sides"}</p>
+      <div className='board' style={{height: !this.props.fromPreview ? null : 'auto'}}>
+      <div>
+      {!this.props.fromPreview 
+        ? <div onClick={!this.state.gameStarted ? this.changeView : this.reset} style={{display: 'block', margin: 'auto'}}>
+          <p style={{minWidth: 100, cursor: 'pointer', textAlign: 'right'}}>{this.state.gameStarted ? "Reset" : "Change Sides"}</p>
         </div>
+        : null 
+      }
         <div id="boardOuter">
           <Container data={letters} id={"numberContainer"} letters={letters} />
           <Container data={numbers} id={"letterContainer"} letters={letters} />
@@ -143,7 +145,11 @@ class Board extends Component {
             })}
           </div>
         </div>
-        <Gutter taken={this.state.taken} letters={letters} view={this.state.view}/>
+        {!this.props.fromPreview
+          ? <Gutter taken={this.state.taken} letters={letters} view={this.state.view}/>
+          : null
+        }
+      </div>
       </div>
     );
   }

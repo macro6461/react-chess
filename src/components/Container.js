@@ -5,7 +5,7 @@ const Container = ({ data, id }) => {
   return (
     <div id={id}>
       {data.map((x, i) => {
-        return <Square key={i} isOnBoard={false} val={x} />;
+        return <Square key={i} isOnBoard={false} val={x} opacity={1} backgroundColor={'white'}/>;
       })}
     </div>
   );

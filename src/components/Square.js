@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 
-const Square = ({ backgroundColor, val, isOnBoard, pos, setSpot, movable }) => {
+const Square = ({ opacity, backgroundColor, val, isOnBoard, pos, setSpot, movable }) => {
   var className = !isOnBoard ? "label" : "square";
 
   const handleClick = () => {
@@ -13,7 +13,7 @@ const Square = ({ backgroundColor, val, isOnBoard, pos, setSpot, movable }) => {
   return (
     <div
       className={className}
-      style={{ backgroundColor }}
+      style={{ opacity, backgroundColor: backgroundColor ? backgroundColor : 'grey' }}
       onClick={handleClick}
     >
       {val}

@@ -5,11 +5,71 @@ body {
   margin-top: 10px;
 }
 
+p{
+  margin-bottom: 0px !important;
+}
+
+.menu{
+  width: 100%; 
+  position: fixed; 
+  top: 0px; 
+}
+
+.menu > div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px 10px 20px;
+}
+
+.menu > div > h1{
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.menu-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  box-shadow: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.menu-item:hover{
+  box-shadow: 2px 2px 5px grey;
+  width: 101%;
+  padding: 12px;
+  font-size: 18px;
+}
+
+.board{
+  display: block;
+  margin: auto;
+  height: 600px;
+  width: 100%;
+  z-index: 100;
+}
+
+.board > div{
+  display: flex;
+  margin: auto;
+  min-width: 100px;
+  max-width: 500px;
+  height: 100%;
+  align-items: center;
+}
+
 .square {
   width: 25px;
   height: 25px;
   display: inline-block;
   margin: 0px;
+  border: solid 1px black;
 }
 
 #boardOuter {
@@ -22,8 +82,8 @@ body {
 
 #boardInner {
   border: solid 1px black;
-  width: 200px;
-  height: 200px;
+  width: 201px;
+  height: 201px;
   display: inline-flex;
   flex-wrap: wrap;
   margin: auto;
@@ -93,4 +153,22 @@ body {
     text-align: center;
     width: 20px;
     margin: 0px;
+}
+
+.imagePreview{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  opacity: 0.6;
+  position: absolute;
+  top: 25px; 
+  margin-left: 11px;
+}
+
+.imagePreview > img{
+  width: 200px; 
+  height: 200px;
+  display: block;
+  margin: auto;
 }
